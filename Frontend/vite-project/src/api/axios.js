@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5005";
+// If VITE_API_URL is set, use it; otherwise use relative URL (same origin)
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -26,7 +27,6 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Optional: auto-logout on expired session
       localStorage.removeItem("taskflow_token");
       localStorage.removeItem("taskflow_user");
     }

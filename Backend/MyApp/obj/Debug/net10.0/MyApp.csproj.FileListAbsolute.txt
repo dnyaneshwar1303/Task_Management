@@ -129,3 +129,10 @@ C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\refint\
 C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\MyApp.pdb
 C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\MyApp.genruntimeconfig.cache
 C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\ref\MyApp.dll
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\bin\Debug\net10.0\MyApp.staticwebassets.runtime.json
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\MyApp.sourcelink.json
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\compressed\bti12n9pa0-{0}-2h9t5hh2sl-2h9t5hh2sl.gz
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\compressed\hqwrfsln74-{0}-wwdmpzmxoc-wwdmpzmxoc.gz
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\compressed\vdzyg0tskm-{0}-180dmtdpho-180dmtdpho.gz
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\compressed\9mbpaxxror-{0}-g3h7a9wx5y-g3h7a9wx5y.gz
+C:\Users\DELL\Desktop\Assessment Project\Backend\MyApp\obj\Debug\net10.0\compressed\thnxfns7ci-{0}-e3c7j4i2cp-e3c7j4i2cp.gz
