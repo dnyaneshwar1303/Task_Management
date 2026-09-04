@@ -1,0 +1,402 @@
+{
+	"info": {
+		"_postman_id": "8f5a1372-9cb1-4475-8120-e2b868a86fa1",
+		"name": "TaskFlow - Assessment API Collection",
+		"description": "Comprehensive Postman API collection for Team Task Management System (.NET 10 Web API + MySQL).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Seed Data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/seed",
+					"host": ["{{base_url}}"],
+					"path": ["api", "seed"]
+				},
+				"description": "Seeds default Admin, Manager, User accounts, sample teams, tasks, comments, and notifications."
+			}
+		},
+		{
+			"name": "Auth - Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Test Candidate\",\n  \"email\": \"candidate@example.com\",\n  \"password\": \"Password@123\",\n  \"role\": \"Manager\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/register",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "register"]
+				}
+			}
+		},
+		{
+			"name": "Auth - Login (Admin)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();",
+							"if (jsonData.token) {",
+							"    pm.environment.set(\"token\", jsonData.token);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			}
+		},
+		{
+			"name": "Auth - Login (Manager)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"manager@example.com\",\n  \"password\": \"Manager@123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			}
+		},
+		{
+			"name": "Auth - Login (User)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"user1@example.com\",\n  \"password\": \"User@123\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "login"]
+				}
+			}
+		},
+		{
+			"name": "Auth - Get All Users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/users",
+					"host": ["{{base_url}}"],
+					"path": ["api", "auth", "users"]
+				}
+			}
+		},
+		{
+			"name": "Dashboard - Stats Overview",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/dashboard/stats",
+					"host": ["{{base_url}}"],
+					"path": ["api", "dashboard", "stats"]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Get All Tasks (Filtered)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/tasks?status=In Progress&priority=High",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks"],
+					"query": [
+						{
+							"key": "status",
+							"value": "In Progress"
+						},
+						{
+							"key": "priority",
+							"value": "High"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Get Task By ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/tasks/1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks", "1"]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Create Task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Implement CI/CD Workflow\",\n  \"description\": \"Configure GitHub Actions for automated build and unit tests\",\n  \"priority\": \"High\",\n  \"status\": \"To Do\",\n  \"assignedTo\": 3,\n  \"teamId\": 1,\n  \"deadline\": \"2026-09-30\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tasks",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks"]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Update Task Status",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"status\": \"Done\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tasks/1/status",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks", "1", "status"]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Add Comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"commentText\": \"Code review completed. Ready for production staging!\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/tasks/1/comments",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks", "1", "comments"]
+				}
+			}
+		},
+		{
+			"name": "Tasks - Get Task Comments",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/tasks/1/comments",
+					"host": ["{{base_url}}"],
+					"path": ["api", "tasks", "1", "comments"]
+				}
+			}
+		},
+		{
+			"name": "Teams - Get All Teams",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/teams",
+					"host": ["{{base_url}}"],
+					"path": ["api", "teams"]
+				}
+			}
+		},
+		{
+			"name": "Teams - Create Team",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Quality Assurance\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/teams",
+					"host": ["{{base_url}}"],
+					"path": ["api", "teams"]
+				}
+			}
+		},
+		{
+			"name": "Teams - Add Team Member",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"teamId\": 1,\n  \"userId\": 4\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/add-team-member",
+					"host": ["{{base_url}}"],
+					"path": ["api", "add-team-member"]
+				}
+			}
+		},
+		{
+			"name": "Notifications - Get User Notifications",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications",
+					"host": ["{{base_url}}"],
+					"path": ["api", "notifications"]
+				}
+			}
+		},
+		{
+			"name": "Notifications - Mark All As Read",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications/read-all",
+					"host": ["{{base_url}}"],
+					"path": ["api", "notifications", "read-all"]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5005"
+		},
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
